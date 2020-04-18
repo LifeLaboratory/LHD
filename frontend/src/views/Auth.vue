@@ -37,9 +37,9 @@
               Вход
             </a-button>
             или
-            <a href="/reg" style="color: #5a0000 ">
+            <router-link to="/reg" style="color: #5a0000">
               Зарегистрироваться
-            </a>
+            </router-link>
           </a-form-item>
         </a-form>
       </div>
