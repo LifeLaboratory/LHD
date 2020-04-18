@@ -23,10 +23,10 @@ response:
       'id_game': int,
       'time': str,
       'round': int, # Номер раунда игры
-      'Health': float,   # Здоровье
+      'health': float,   # Здоровье
       'food': float,     # Питание
-      'Leisure': float,  # Досуг
-      'Communication': float,   # Общение
+      'leisure': float,  # Досуг
+      'communication': float,   # Общение
       'point': int # Количество очков, заработанных за игру.
     }
   ]
@@ -62,7 +62,12 @@ response:
   'id_person': int,
   'name': str,
   'description': str, # описание персонажа
-  'pic': str # ссылка на картинку
+  'pic': str, # ссылка на картинку
+  'health': float,  # Здоровье
+  'food': float,  # Питание
+  'leisure': float,  # Досуг
+  'communication': float,  # Общение
+  'value': int,  # количество денег
 }
 ```
 
@@ -71,8 +76,19 @@ response:
 GET /api/rating # Рейтинг игр пользователей
 response:
 {
-  "id_user": int, 
-  "point": int
+    'top': [
+        {
+            'id_user': int,
+            'login': str,
+            'time': str,
+            'health': float,  # Здоровье
+            'food': float,  # Питание
+            'leisure': float,  # Досуг
+            'communication': float,  # Общение
+            'point': int,  # Количество очков, заработанных за игру.
+            'value': int,  # количество денег
+        }
+    ]
 }
 GET /api/rating/<int:id_user> # Рейтинг игр пользователя
 response:
@@ -82,10 +98,10 @@ response:
       'id_game': int,
       'time': str,
       'round': int, # Номер раунда игры
-      'Health': float,   # Здоровье
+      'health': float,   # Здоровье
       'food': float,     # Питание
-      'Leisure': float,  # Досуг
-      'Communication': float,   # Общение
+      'leisure': float,  # Досуг
+      'communication': float,   # Общение
       'point': int, # Количество очков, заработанных за игру.
       'value': int, # количество денег
     }
@@ -101,10 +117,10 @@ response:
   'id_question': int,
   'description': str,
   'round': int, # Номер раунда игры
-  'Health': float,   # Здоровье
+  'health': float,   # Здоровье
   'food': float,     # Питание
-  'Leisure': float,  # Досуг
-  'Communication': float,   # Общение
+  'leisure': float,  # Досуг
+  'communication': float,   # Общение
   'point': int, # количество очков
   'value': int, # количество денег
 }
@@ -124,10 +140,10 @@ response
   'id_question': int,
   'description': str,
   'round': int, # Номер раунда игры
-  'Health': float,   # Здоровье
+  'health': float,   # Здоровье
   'food': float,     # Питание
-  'Leisure': float,  # Досуг
-  'Communication': float,   # Общение
+  'leisure': float,  # Досуг
+  'communication': float,   # Общение
   'point': int, # количество очков
   'value': int, # количество денег
 }

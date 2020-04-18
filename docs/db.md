@@ -60,7 +60,7 @@
 ### Сессии пользователей
 ```sql
   'id_user': int,
-  'id_session': uuid
+  'id_session': text
 ```
 
 
@@ -68,6 +68,6 @@
 ```sql
   'id_event': int,
   'description': text,
-  'id_session': int
+  'id_session': text
 ```
 
