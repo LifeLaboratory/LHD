@@ -35,6 +35,11 @@ Vue.use(VueRouter)
     name: 'Rating',
     component: () => import('../views/Rating.vue')
   },
+  {
+    path: '/game',
+    name: 'Game',
+    component: () => import('../views/Game.vue')
+  },
 ]
 
 const router = new VueRouter({
