@@ -40,7 +40,18 @@ export function getPerson () {
             return response.data
         })
         .catch(function (error) {
-            this.$message.error('Персонажей нет ¯\\_(ツ)_/¯');
+            console.log(error)
+            return false
+        })
+}
+
+export function getRating () {
+    return axios.get(`${process.env.VUE_APP_BACKEND}/api/rating`)
+        .then(function (response) {
+            console.log(response)
+            return response.data
+        })
+        .catch(function (error) {
             console.log(error)
             return false
         })
