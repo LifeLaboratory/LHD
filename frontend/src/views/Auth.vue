@@ -48,7 +48,8 @@
 </template>
 
 <script>
-import * as authApi from '@/api/auth.js'
+import {authUser} from "../api/auth";
+
 export default {
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'normal_login' });
@@ -59,8 +60,8 @@ export default {
       this.form.validateFields( async (err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
-          let res = await authApi.authUser(values)
-          if (res != null) {
+          let res = await authUser(values)
+          if (res !== false) {
             localStorage.setItem('session', res.session)
             this.$router.push('/start')
           } else {

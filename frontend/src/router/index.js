@@ -28,8 +28,13 @@ Vue.use(VueRouter)
   {
     path: '/auth',
     name: 'Auth',
-    component: () => import('../views/Auth')
-  }
+    component: () => import('../views/Auth.vue')
+  },
+  {
+    path: '/rating',
+    name: 'Rating',
+    component: () => import('../views/Rating.vue')
+  },
 ]
 
 const router = new VueRouter({
