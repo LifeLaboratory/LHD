@@ -15,3 +15,33 @@ export function registerUser (data) {
       return false
     })
 }
+
+export function authUser (data) {
+    return axios.post(`${process.env.VUE_APP_BACKEND}/api/user/login`, JSON.stringify(data),
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(function (response) {
+            console.log(response.data)
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error)
+            return false
+        })
+}
+
+export function getPerson () {
+    return axios.get(`${process.env.VUE_APP_BACKEND}/api/person`)
+        .then(function (response) {
+            console.log(response)
+            return response.data
+        })
+        .catch(function (error) {
+            this.$message.error('Персонажей нет ¯\\_(ツ)_/¯');
+            console.log(error)
+            return false
+        })
+}

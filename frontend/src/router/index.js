@@ -19,6 +19,11 @@ Vue.use(VueRouter)
     path: '/start',
     name: 'Start',
     component: () => import('../views/StartGame.vue')
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: () => import('../views/Auth')
   }
 ]
 
