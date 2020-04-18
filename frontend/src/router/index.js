@@ -14,6 +14,11 @@ Vue.use(VueRouter)
     path: '/reg',
     name: 'Register',
     component: () => import('../views/Register.vue')
+  },
+  {
+    path: '/start',
+    name: 'Start',
+    component: () => import('../views/StartGame.vue')
   }
 ]
 

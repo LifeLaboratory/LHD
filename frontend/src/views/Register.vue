@@ -1,45 +1,48 @@
 <template>
 <a-row type="flex" justify="center">
   <a-col :span="12">
-      <a-form
-        id="components-form"
-        :form="form"
-        class="form"
-        @submit="handleSubmit"
-      >
-        <a-form-item>
-          <a-input
-            v-decorator="[
-              'login',
-              { rules: [{ required: true, message: 'Введите имя!' }] },
-            ]"
-            placeholder="Username"
-          >
-            <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
-          </a-input>
-        </a-form-item>
-        <a-form-item>
-          <a-input
-            v-decorator="[
-              'password',
-              { rules: [{ required: true, message: 'Введите пароль!' }] },
-            ]"
-            type="password"
-            placeholder="Password"
-          >
-            <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
-          </a-input>
-        </a-form-item>
-        <a-form-item>
-          <a-button type="primary" html-type="submit" class="form-button">
-            Зарегестрироваться
-          </a-button>
-          или
-          <a href="">
-            Войти
-          </a>
-        </a-form-item>
-      </a-form>
+    <div class="box">
+      <h2> Регистрация </h2>
+        <a-form
+          id="components-form"
+          :form="form"
+          class="form"
+          @submit="handleSubmit"
+        >
+          <a-form-item>
+            <a-input
+              v-decorator="[
+                'login',
+                { rules: [{ required: true, message: 'Введите имя!' }] },
+              ]"
+              placeholder="Username"
+            >
+              <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-input
+              v-decorator="[
+                'password',
+                { rules: [{ required: true, message: 'Введите пароль!' }] },
+              ]"
+              type="password"
+              placeholder="Password"
+            >
+              <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" html-type="submit" class="form-button">
+              Зарегестрироваться
+            </a-button>
+            или
+            <a href="" style="color: #5a0000 ">
+              Войти
+            </a>
+          </a-form-item>
+        </a-form>
+      </div>
     </a-col>
 </a-row>
 </template>
@@ -59,7 +62,7 @@ export default {
           let res = await authApi.registerUser(values)
           if (res !== false) {
             localStorage.setItem('session', res.session)
-            router.push('/game')
+            this.$router.push('/start')
           } else {
             this.$message.error('Пользователь с таким именем уже существует');
           }

@@ -9,10 +9,36 @@
 </template>
 
 <style>
+
+@font-face {
+  font-family: bit; /* Имя шрифта */
+  src: url(/fonts/8bit.ttf); /* Путь к файлу со шрифтом */
+ }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #310a0a !important; 
+}
+
+.box {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: solid #520202 2px;
+  background: rgba(255,255,255, 0.7)
+}
+
+.ant-btn-primary {
+  background: #5a0000 !important;
+  border-color: #100b0b !important;
+}
+
+body {
+  background: url('/img/background.jpg') no-repeat;
+  background-size: cover;
+  backdrop-filter: opacity(0.5) blur(3px);
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: bit;
   text-align: center;
   color: #2c3e50;
 }
