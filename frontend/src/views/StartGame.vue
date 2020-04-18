@@ -14,16 +14,34 @@
         </a-row>
         <div class="button-group">
           <a-button block>Начать игру</a-button>
-          <a-button block>Рейтинг</a-button>
+          <a-button v-on:click="toRating()" block>Рейтинг</a-button>
           <a-button block>История выживания</a-button>
         </div>
 
         <div class="person-list">
-          <div v-for="item in this.persons" style="border: 1px solid black;">
+          <div v-for="item in persons" style="border: 1px solid black;">
             <img :src="item.pic" height="40" width="40" style="margin-top: 5px;"/>
             <h3>{{item.name}}</h3>
             <p>{{item.description}}</p>
-            <a-button type="primary" class="form-button" style="margin-bottom: 5px;">
+
+            <table width="100%" border="1">
+              <tr>
+                <th>Здоровье</th>
+                <th>Питание</th>
+                <th>Досуг</th>
+                <th>Общение</th>
+                <th>Деньги</th>
+              </tr>
+              <tr>
+                <td>{{item.health}}</td>
+                <td>{{item.food}}</td>
+                <td>{{item.leisure}}</td>
+                <td>{{item.communication}}</td>
+                <td>{{item.value}}</td>
+              </tr>
+            </table>
+
+            <a-button type="primary" class="form-button" style="margin-bottom: 5px; margin-top: 5px;">
               Продолжить игру
             </a-button>
           </div>
@@ -39,11 +57,16 @@ export default {
   data: {
     persons: []
   },
+  methods: {
+    toRating: function() {
+      this.$router.push('/rating');
+    }
+  },
   async beforeCreate() {
 
     // получение всех персонажей
     let res = await getPerson()
-    if (res != null) {
+    if (res !== false) {
       console.log(res);
       this.persons = res;
     } else {
@@ -80,5 +103,8 @@ export default {
 }
 #components-form .form-button {
   width: 100%;
+}
+.person-list {
+  margin-top: 10px;
 }
 </style>
