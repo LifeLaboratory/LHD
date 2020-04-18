@@ -19,3 +19,13 @@ class Provider(bp.Provider):
   returning id_session as "session"
 '''
         return self.execute()
+
+    def check_session(self, session):
+        self.query = f'''
+  select 
+    id_user
+  from "{self.table_name}"
+  where id_session = '{session}'
+  limit 1
+'''
+        return self.execute()[0]

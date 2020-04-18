@@ -20,6 +20,7 @@ response:
   'rating': int,  # какое место пользователь занимает в общем рейтинге
   'count_game': int,  # Количество игр
   'max_point': int,  # Максимальное количество очков
+  'pic': str,
   'game_history': [
     {
       'id_game': int,
@@ -42,6 +43,7 @@ response:
   'rating': int,  # какое место пользователь занимает в общем рейтинге
   'count_game': int,  # количество игр
   'max_point': int,  # Максимальное количество очков
+  'pic': str,
   'game_history': [
     {
       'id_game': int,
@@ -136,11 +138,13 @@ response:
 
 ### Игра
 ```python
-GET /api/game # Получить данные о текущей игре
+-> GET /api/game # Получить данные о текущей игре
 response:
 {
   'id_question': int,
   'description': str,
+  'left_answer': str,  # Первый ответ
+  'right_answer': str,  # Второй ответ
   'round': int, # Номер раунда игры
   'health': float,   # Здоровье
   'food': float,     # Питание
@@ -155,15 +159,16 @@ response:
   'id_person': int # идентификатор персонажа, с которым начинается игра
 }
 
-POST /api/game/question
+-> POST /api/game/question
 {
-  'id_question': int,
-  'answer': int 
+  'answer': str # левый или правый ответ 
 }
 response 
 {
   'id_question': int,
   'description': str,
+  'left_answer': str,  # Первый ответ
+  'right_answer': str,  # Второй ответ
   'round': int, # Номер раунда игры
   'health': float,   # Здоровье
   'food': float,     # Питание

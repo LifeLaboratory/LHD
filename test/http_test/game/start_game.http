@@ -6,7 +6,7 @@
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 POST http://127.0.0.1/api/game
 Content-Type: application/json
-Session: 69b97550-17f6-cee2-c762-53ea3dd53561
+Session: 202d9f32-b20a-bc9a-54aa-558e43fe8d6e
 
 {
   "id_person": 1

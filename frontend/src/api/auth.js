@@ -56,3 +56,14 @@ export function getRating () {
             return false
         })
 }
+
+export function getProfile () {
+    return axios.get(`${process.env.VUE_APP_BACKEND}/api/user/profile`)
+        .then(function (response) {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error)
+            return false
+        })
+}

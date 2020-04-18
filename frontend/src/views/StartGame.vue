@@ -1,15 +1,15 @@
 <template>
-<a-row type="flex" justify="center">
+<a-row type="flex" justify="center" v-if="isLoaded">
   <a-col :span="12">
       <div class="box profile">
         <a-row class="title-profile">
           <a-col :span="8">
-            <a-avatar :size="128" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            <a-avatar :size="128" :src="this.profileUser.pic" />
           </a-col>
           <a-col :span="16" class="mini-rating">
-            <div>Имя: Lalow</div>
-            <div>Игры сыграно: 25 игр</div>
-            <div>Максимально прожито дней: 243 дня</div>
+            <div>Имя: {{profileUser.login}}</div>
+            <div>Игры сыграно: {{profileUser.count_game}}</div>
+            <div>Максимально прожито дней: {{profileUser.max_point}}</div>
           </a-col>
         </a-row>
         <div class="button-group">
@@ -40,10 +40,6 @@
                 <td>{{item.value}}</td>
               </tr>
             </table>
-
-            <a-button type="primary" class="form-button" style="margin-bottom: 5px; margin-top: 5px;">
-              Продолжить игру
-            </a-button>
           </div>
         </div>
       </div>
@@ -52,27 +48,50 @@
 </template>
 
 <script>
-import {getPerson} from "../api/auth";
+  import {getPerson, getProfile} from "../api/auth";
 export default {
-  data: {
-    persons: []
+  data() {
+    return {
+      isLoaded: false,
+      persons: [],
+      profileUser: undefined,
+    }
   },
   methods: {
     toRating: function() {
       this.$router.push('/rating');
+    },
+    getMyProfile: function () {
+      // получение информации о пользователе
+      let profile = getProfile()
+      if (profile !== false) {
+        this.profileUser = profile;
+        profile.then(val => {
+          this.profileUser = val
+          console.log("Профиль: ", this.profileUser)
+        });
+      } else {
+        this.$message.error('Ошибка получения профиля');
+      }
+    },
+    getAllPerson: function () {
+      // получение всех персонажей
+      let res = getPerson()
+      if (res !== false) {
+        res.then(val => {
+          this.persons = val;
+          console.log("Персонажи: ", this.persons);
+        });
+      } else {
+        this.$message.error('Ошибка получения персонажей');
+      }
     }
   },
-  async beforeCreate() {
 
-    // получение всех персонажей
-    let res = await getPerson()
-    if (res !== false) {
-      console.log(res);
-      this.persons = res;
-    } else {
-      this.$message.error('Ошибка получения персонажей');
-    }
-    //
+  mounted() {
+    this.getMyProfile();
+    this.getAllPerson();
+    this.isLoaded = true;
   },
 };
 </script>
