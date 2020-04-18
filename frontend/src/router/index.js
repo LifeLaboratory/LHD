@@ -21,6 +21,11 @@ Vue.use(VueRouter)
     component: () => import('../views/StartGame.vue')
   },
   {
+    path: '/choice',
+    name: 'Start',
+    component: () => import('../views/ChoicePerson.vue')
+  },
+  {
     path: '/auth',
     name: 'Auth',
     component: () => import('../views/Auth.vue')
