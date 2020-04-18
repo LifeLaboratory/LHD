@@ -1,0 +1,39 @@
+version: '2.1'
+
+services:
+  app:
+    restart: always
+    build: app/
+    volumes:
+      - ./app/ :/app/
+    expose:
+      - "13451"
+    environment:
+      DB_PASSWORD: postgres
+      DB_LOGIN: postgres
+      DB_HOST: db
+      HOST: http://localhost
+      DB_NAME: project_db
+  proxy:
+    restart: always
+    build:
+      context:  ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    links:
+      - app
+  db:
+    restart: always
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=project_db
+  redis:
+    restart: always
+    image: redis
+    ports:
+      - "6379:6379"

@@ -101,4 +101,18 @@ dist
 .dynamodb/
 
 # TernJS port file
+
 .tern-port
+/.idea
+*.pyc
+*.bak
+*.info
+*.ini
+*__pycache__*
+.idea/*
+.gradle
+.DS_Store
+.idea
+gradlew*
+build
+gradle
