@@ -8,42 +8,9 @@ PREFIX = '/api/rating'
 
 @app.route(PREFIX, methods=['GET'])
 def all_rating():
+    top = Processor().get_top_users()
     func = {
-        'top': [
-            {
-                'id_user': 1,
-                'name': 'Hacker',
-                'time': '2020-02-02 13:00:02',
-                'health': 10.0,  # Здоровье
-                'food': 5.0,  # Питание
-                'leisure': 3.0,  # Досуг
-                'communication': 4.0,  # Общение
-                'point': 5,  # Количество очков, заработанных за игру.
-                'value': 3,  # количество денег
-            }
-        ]
+        'top': top
     }
-
-    answer = jsonify(func)
-    return answer, header_option()
-
-
-@app.route(PREFIX + '/<int:id_user>', methods=['GET'])
-def rating(id_user):
-    func = {
-      'game_history': [
-        {
-          'id_game': 1,
-          'time': '2020-02-02 13:00:02',
-          'health': 10.0,   # Здоровье
-          'food': 5.0,     # Питание
-          'leisure': 3.0,  # Досуг
-          'communication': 4.0,   # Общение
-          'point': 5, # Количество очков, заработанных за игру.
-          'value': 3, # количество денег
-        }
-      ]
-    }
-    # answer = jsonify(Processor().profile(id_user))
     answer = jsonify(func)
     return answer, header_option()

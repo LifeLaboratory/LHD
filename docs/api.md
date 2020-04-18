@@ -99,7 +99,7 @@ response:
 
 ### Рейтинг
 ```python
-GET /api/rating # Рейтинг игр пользователей
+-> GET /api/rating # Рейтинг игр пользователей
 response:
 {
     'top': [
@@ -115,24 +115,6 @@ response:
             'value': int,  # количество денег
         }
     ]
-}
-
-GET /api/rating/<int:id_user> # Рейтинг игр пользователя
-response:
-{
-  'game_history': [
-    {
-      'id_game': int,
-      'time': str,
-      'round': int, # Номер раунда игры
-      'health': float,   # Здоровье
-      'food': float,     # Питание
-      'leisure': float,  # Досуг
-      'communication': float,   # Общение
-      'point': int, # Количество очков, заработанных за игру.
-      'value': int, # количество денег
-    }
-  ]
 }
 ```
 
