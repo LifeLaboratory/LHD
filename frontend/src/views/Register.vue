@@ -37,7 +37,7 @@
               Зарегестрироваться
             </a-button>
             или
-            <a href="" style="color: #5a0000 ">
+            <a href="/auth" style="color: #5a0000 ">
               Войти
             </a>
           </a-form-item>
@@ -60,8 +60,9 @@ export default {
         if (!err) {
           console.log('Received values of form: ', values);
           let res = await authApi.registerUser(values)
-          if (res !== false) {
-            localStorage.setItem('session', res.session)
+          if (res != null) {
+            console.log(res);
+            localStorage.setItem('session', res.session);
             this.$router.push('/start')
           } else {
             this.$message.error('Пользователь с таким именем уже существует');
