@@ -8,16 +8,7 @@ PREFIX = '/api/user'
 
 @app.route(PREFIX, methods=['GET'])
 def all_user():
-    func = {
-        'users': [
-            {
-                'id_user': 1,
-                'login': 'Hacker_user'
-            }
-        ]
-    }
-    answer = jsonify(func)
-    return answer
+    return jsonify(Processor().users()), header_option()
 
 
 @app.route(PREFIX + '/<int:id_user>', methods=['GET'])
@@ -30,17 +21,17 @@ def profile(id_user):
         {
           'id_game': int,
           'time': str,
-          'Health': float,   # Здоровье
+          'health': float,   # Здоровье
           'food': float,     # Питание
-          'Leisure': float,  # Досуг
-          'Communication': float,   # Общение
+          'leisure': float,  # Досуг
+          'communication': float,   # Общение
           'point': int # Количество очков, заработанных за игру.
         }
       ]
     }
     # answer = jsonify(Processor().profile(id_user))
     answer = jsonify(func)
-    return answer
+    return answer, header_option()
 
 
 @app.route(PREFIX + '/login', methods=['POST', 'OPTIONS'])
@@ -49,12 +40,8 @@ def login():
         print(request.method)
         return jsonify({}), header_option()
     data = request.json
-    answer = {
-        'session': '123e4567-e89b-12d3-a456-426655440000'
-    }
-
-    # return jsonify(Processor().login(data))
-    return jsonify(answer)
+    print(f'data = {data}')
+    return jsonify(Processor().login(data)), header_option()
 
 
 @app.route(PREFIX + '/register', methods=['POST', 'OPTIONS'])
@@ -62,9 +49,6 @@ def register():
     if request.method == 'OPTIONS':
         return {}, header_option()
     data = request.json
-    answer = {
-        'session': '123e4567-e89b-12d3-a456-426655440000'
-    }
-    # return jsonify(Processor().create(data))
-    return jsonify(answer)
+    print(f'data = {data}')
+    return jsonify(Processor().create(data)), header_option()
 
