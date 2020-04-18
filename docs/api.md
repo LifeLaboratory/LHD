@@ -1,7 +1,7 @@
 # API:
 ### Работа с пользователем
 ```python
-GET /api/user # получение списка пользователей
+-> GET /api/user # получение списка пользователей
 response:
 {
   'users': [
@@ -12,12 +12,36 @@ response:
   ]
 }
 
+GET /api/user/profile  # получение своего профиля пользователя
+response:
+{
+  'id_user': int,
+  'login': str,
+  'rating': int,  # какое место пользователь занимает в общем рейтинге
+  'count_game': int,  # Количество игр
+  'max_point': int,  # Максимальное количество очков
+  'game_history': [
+    {
+      'id_game': int,
+      'time': str,
+      'round': int, # Номер раунда игры
+      'health': float,   # Здоровье
+      'food': float,     # Питание
+      'leisure': float,  # Досуг
+      'communication': float,   # Общение
+      'point': int # Количество очков, заработанных за игру.
+    }
+  ]
+}
+
 GET /api/user/<int:id_user> # получение профиля пользователя
 response:
 {
   'id_user': int,
   'login': str,
   'rating': int,  # какое место пользователь занимает в общем рейтинге
+  'count_game': int,  # количество игр
+  'max_point': int,  # Максимальное количество очков
   'game_history': [
     {
       'id_game': int,
@@ -33,7 +57,7 @@ response:
 
 }
 
-POST /api/user/login # авторизация пользователя
+-> POST /api/user/login # авторизация пользователя
 {
   'login': str,
   'password': str
@@ -43,7 +67,7 @@ response:
   'session': str # сессия, с которой пользователь подключен
 }
 
-POST /api/user/register #  регистрация пользователя
+-> POST /api/user/register #  регистрация пользователя
 {
   'login': str,
   'password': str
@@ -56,7 +80,7 @@ response:
 
 ### Выбор персонажа
 ```python
-GET /api/person # Список персонажей в игре
+-> GET /api/person # Список персонажей в игре
 response:
 {
   'id_person': int,
@@ -79,7 +103,7 @@ response:
     'top': [
         {
             'id_user': int,
-            'login': str,
+            'name': str,
             'time': str,
             'health': float,  # Здоровье
             'food': float,  # Питание
@@ -90,6 +114,7 @@ response:
         }
     ]
 }
+
 GET /api/rating/<int:id_user> # Рейтинг игр пользователя
 response:
 {
@@ -125,7 +150,7 @@ response:
   'value': int, # количество денег
 }
 
-POST /api/game # Запуск новой игры
+-> POST /api/game # Запуск новой игры
 {
   'id_person': int # идентификатор персонажа, с которым начинается игра
 }
