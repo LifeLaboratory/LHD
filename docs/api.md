@@ -22,12 +22,10 @@ response:
     {
       'id_game': int,
       'time': str,
-      'feature': {
-        'Health': float,   # Здоровье
-        'food': float,     # Питание
-        'Leisure': float,  # Досуг
-        'Communication': float   # Общение
-       },
+      'Health': float,   # Здоровье
+      'food': float,     # Питание
+      'Leisure': float,  # Досуг
+      'Communication': float,   # Общение
       'point': int # Количество очков, заработанных за игру.
     }
   ]
@@ -81,13 +79,12 @@ response:
     {
       'id_game': int,
       'time': str,
-      'feature': {
-        'Health': float,   # Здоровье
-        'food': float,     # Питание
-        'Leisure': float,  # Досуг
-        'Communication': float   # Общение
-       },
-      'point': int # Количество очков, заработанных за игру.
+      'Health': float,   # Здоровье
+      'food': float,     # Питание
+      'Leisure': float,  # Досуг
+      'Communication': float,   # Общение
+      'point': int, # Количество очков, заработанных за игру.
+      'value': int, # количество денег
     }
   ]
 }
@@ -100,13 +97,12 @@ response:
 {
   'id_question': int,
   'description': str,
-  'feature': { # текущие потребности пользователя,
-    'Health': float,   # Здоровье
-    'food': float,     # Питание
-    'Leisure': float,  # Досуг
-    'Communication': float   # Общение
-  },
-  'point': str, # количество очков
+  'Health': float,   # Здоровье
+  'food': float,     # Питание
+  'Leisure': float,  # Досуг
+  'Communication': float,   # Общение
+  'point': int, # количество очков
+  'value': int, # количество денег
 }
 
 POST /api/game # Запуск новой игры
@@ -123,13 +119,12 @@ response
 {
   'id_question': int,
   'description': str,
-  'feature': { # текущие потребности пользователя,
-    'Health': float,   # Здоровье
-    'food': float,     # Питание
-    'Leisure': float,  # Досуг
-    'Communication': float   # Общение
-  },
-  'point': str, # количество очков
+  'Health': float,   # Здоровье
+  'food': float,     # Питание
+  'Leisure': float,  # Досуг
+  'Communication': float,   # Общение
+  'point': int, # количество очков
+  'value': int, # количество денег
 }
 
 GET /api/game/events # Получить события, которые произошли в игре
