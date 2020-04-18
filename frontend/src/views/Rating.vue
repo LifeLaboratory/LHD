@@ -1,5 +1,5 @@
 <template>
-<a-row type="flex" justify="center">
+<a-row type="flex" justify="center" v-if="isLoaded">
   <a-col :span="12">
       <div class="box">
         <h2>Рейтинг</h2>
@@ -35,8 +35,11 @@
 import {getRating} from "../api/auth";
 
 export default {
-  data: {
-    rating: []
+  data() {
+    return {
+      isLoaded: false,
+      rating: []
+    }
   },
   async beforeCreate() {
     // получение рейтинга пользователей
@@ -44,6 +47,7 @@ export default {
     if (res !== false) {
       console.log(res);
       this.rating = res.top;
+      this.isLoaded = true;
     } else {
       this.$message.error('Ошибка получения персонажей');
     }
