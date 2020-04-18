@@ -7,3 +7,6 @@ class Processor:
 
     def create(self, id_user):
         return self.provider.create(id_user)
+
+    def check_session(self, session):
+        return self.provider.check_session(session)

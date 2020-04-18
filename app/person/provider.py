@@ -21,4 +21,4 @@ class Provider(bp.Provider):
       and id_person = {id_person}
     limit 1
 '''
-        return self.all_person(where)
+        return self.all_person(where)[0]

@@ -12,7 +12,7 @@ def all_rating():
         'top': [
             {
                 'id_user': 1,
-                'login': 'Hacker',
+                'name': 'Hacker',
                 'time': '2020-02-02 13:00:02',
                 'health': 10.0,  # Здоровье
                 'food': 5.0,  # Питание

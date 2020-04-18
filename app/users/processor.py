@@ -14,7 +14,7 @@ class Processor:
     def login(self, data):
         user = self.provider.login(data)
         if user:
-            return create_session(user.get('login'))
+            return create_session(user.get('id_user'))
 
     def profile(self, id_user):
         return self.provider.profile(id_user)

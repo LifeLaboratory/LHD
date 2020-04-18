@@ -54,14 +54,41 @@ class Provider(bp.Provider):
   where id_question = random()*((select count from question_count limit 1)-1)+1
   limit 1
 '''
-        return self.execute()
+        return self.execute()[0]
 
-    def get_game(self):
+    def get_game(self, id_user):
         """
         Метод получает информацию о текущей игре пользователя
         :return:
         """
-        pass
+        self.query = f'''
+  with get_game as (
+    select 
+      id_question
+      , round
+      , health
+      , food
+      , leisure
+      , communication
+      , value
+      , id_person
+    from game
+    where id_user = {id_user}
+      and time_close is null
+  )
+  select 
+    gg.*
+    , q.description
+    , q.left->>'description' as left_answer 
+    , q.right->>'description' as right_answer 
+    , p.name
+    , p.pic
+  from get_game gg
+    join question q using(id_question)
+    join person p using(id_person)
+  limit 1
+'''
+        return self.execute()
 
     def close_old_game(self, data):
         """
@@ -75,6 +102,28 @@ class Provider(bp.Provider):
     where "id_user" = {data.get('id_user')}
       and time_close is Null
 '''
+        self.execute()
+
+    def update_game_status(self, data):
+        """
+        Метод обновляет текущую игру
+        :param data:
+        :return:
+        """
+        self.query = f'''
+  update game
+    set 
+      round = {data.get('round')}
+      , health = {data.get('health')}
+      , food = {data.get('food')}
+      , leisure = {data.get('leisure')}
+      , communication = {data.get('communication')}
+      , point = {data.get('point')}
+      , id_question = {data.get('id_question')}
+    where "id_game" = {data.get('id_game')}
+      and time_close is Null
+        '''
+        self.execute()
 
     def get_question(self):
         """
@@ -89,5 +138,44 @@ class Provider(bp.Provider):
         :param data:
         :return:
         """
-        pass
-
+        self.query = f'''
+  with question_count as (
+    select count(1)
+    from question
+  ),
+  new_question as (
+    select *
+    from question
+    where id_question = random()*((select count from question_count limit 1)-1)+1
+    limit 1
+  ),
+  get_game as (
+    select 
+      nq.id_question
+      , id_game
+      , round + 1 as round
+      , greatest(0, g.health + (q.{data.get('answer')}->>'health')::int) as health
+      , greatest(0, g.food + (q.{data.get('answer')}->>'food')::int) as food
+      , greatest(0, g.leisure + (q.{data.get('answer')}->>'leisure')::int) as leisure
+      , greatest(0, g.communication + (q.{data.get('answer')}->>'communication')::int) as communication
+      , g.point + (q.{data.get('answer')}->>'point')::int as point
+      , id_person
+    from game g, new_question nq
+     left join question q using(id_question)
+    where id_user = {data.get('id_user')}
+      and time_close is null
+    limit 1
+  )
+  select 
+      gg.*
+    , q.description
+    , q.left->>'description' as left_answer 
+    , q.right->>'description' as right_answer 
+    , p.name
+    , p.pic
+  from get_game gg
+    join question q using(id_question)
+    join person p using(id_person)
+  limit 1
+'''
+        return self.execute()
