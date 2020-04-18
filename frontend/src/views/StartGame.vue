@@ -13,25 +13,44 @@
           </a-col>
         </a-row>
         <div class="button-group">
-          <a-button block>Default</a-button>
-          <a-button block>Default</a-button>
-          <a-button block>Default</a-button>
+          <a-button block>Начать игру</a-button>
+          <a-button block>Рейтинг</a-button>
+          <a-button block>История выживания</a-button>
         </div>
 
+        <div class="person-list">
+          <div v-for="item in this.persons" style="border: 1px solid black;">
+            <img :src="item.pic" height="40" width="40" style="margin-top: 5px;"/>
+            <h3>{{item.name}}</h3>
+            <p>{{item.description}}</p>
+            <a-button type="primary" class="form-button" style="margin-bottom: 5px;">
+              Продолжить игру
+            </a-button>
+          </div>
+        </div>
       </div>
   </a-col>
 </a-row>
 </template>
 
 <script>
-
+import {getPerson} from "../api/auth";
 export default {
-  beforeCreate() {
- 
+  data: {
+    persons: []
   },
-  methods: {
+  async beforeCreate() {
 
-  }
+    // получение всех персонажей
+    let res = await getPerson()
+    if (res != null) {
+      console.log(res);
+      this.persons = res;
+    } else {
+      this.$message.error('Ошибка получения персонажей');
+    }
+    //
+  },
 };
 </script>
 <style>
