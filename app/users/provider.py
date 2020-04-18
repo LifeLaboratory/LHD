@@ -39,8 +39,67 @@ class Provider(bp.Provider):
         return user[0] if user else None
 
     def profile(self, id_user):
-        where = f'where id_user = {id_user}'
-        return self.users(where)
+        self.query = f'''
+with info_user_game as (
+    select
+      id_user
+      , count(1) as count_game
+      , max(point) as max_point
+    from game
+    group by id_user
+),
+position_user as (
+  select
+      id_user
+    , ROW_NUMBER () over (
+        order by max_point
+      ) as rating
+  from info_user_game
+  order by 2
+),
+game_history as (
+  select
+    array_agg(
+        json_build_object(
+            'id_game', id_game,
+            'time', time,
+            'round', round,
+            'health', health,
+            'food', food,
+            'leisure', leisure,
+            'communication', communication,
+            'point', point
+            )
+        )
+  from (
+    select id_game
+         , time_close as time
+         , round
+         , health
+         , food
+         , leisure
+         , communication
+         , point
+    from game
+    where id_user = {id_user}
+    order by 2 desc nulls first
+  ) g
+)
+select
+  id_user
+  , login as names
+  , rating
+  , coalesce(count_game, 0) as count_game
+  , coalesce(max_point, 0) as max_point
+  , pic
+  , coalesce((select * from game_history limit 1), '{{}}'::json[]) as game_history
+from users u
+left join info_user_game iug using(id_user)
+left join position_user pu using(id_user)
+where id_user = {id_user}
+limit 1
+'''
+        return self.execute()
 
     def users(self, where='where True'):
         self.query = f'''

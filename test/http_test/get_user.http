@@ -5,7 +5,8 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-GET http://127.0.0.1/api/user/1
+GET http://127.0.0.1/api/user/20
 Accept: application/json
+Session: 69b97550-17f6-cee2-c762-53ea3dd53561
 
 ###
