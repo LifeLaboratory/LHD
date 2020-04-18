@@ -15,6 +15,7 @@
   'time_open': timestamp,
   'time_close': timestamp,
   'time_close': timestamp,
+  'round': int, # Номер раунда игры
   'Health': float,   # Здоровье
   'food': float,     # Питание
   'Leisure': float,  # Досуг
@@ -50,6 +51,7 @@
 ### Персонажи
 ```sql
   'id_person': int,
+  'name': str,
   'description': str, # описание персонажа
   'pic': str # ссылка на картинку
 ```

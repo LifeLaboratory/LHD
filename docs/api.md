@@ -22,6 +22,7 @@ response:
     {
       'id_game': int,
       'time': str,
+      'round': int, # Номер раунда игры
       'Health': float,   # Здоровье
       'food': float,     # Питание
       'Leisure': float,  # Досуг
@@ -59,6 +60,7 @@ GET /api/person # Список персонажей в игре
 response:
 {
   'id_person': int,
+  'name': str,
   'description': str, # описание персонажа
   'pic': str # ссылка на картинку
 }
@@ -79,6 +81,7 @@ response:
     {
       'id_game': int,
       'time': str,
+      'round': int, # Номер раунда игры
       'Health': float,   # Здоровье
       'food': float,     # Питание
       'Leisure': float,  # Досуг
@@ -97,6 +100,7 @@ response:
 {
   'id_question': int,
   'description': str,
+  'round': int, # Номер раунда игры
   'Health': float,   # Здоровье
   'food': float,     # Питание
   'Leisure': float,  # Досуг
@@ -119,6 +123,7 @@ response
 {
   'id_question': int,
   'description': str,
+  'round': int, # Номер раунда игры
   'Health': float,   # Здоровье
   'food': float,     # Питание
   'Leisure': float,  # Досуг
