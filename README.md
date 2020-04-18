@@ -33,5 +33,5 @@
 
 
 ## Документация:
-#### [API](https://github.com/LifeLaboratory/LHD/docs/api.md)
-#### [Структура данных](https://github.com/LifeLaboratory/LHD/docs/db.md)
+#### [API](docs/api.md)
+#### [Структура данных](docs/db.md)
