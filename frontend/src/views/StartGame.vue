@@ -40,10 +40,6 @@
                 <td>{{item.value}}</td>
               </tr>
             </table>
-
-            <a-button type="primary" class="form-button" style="margin-bottom: 5px; margin-top: 5px;">
-              Продолжить игру
-            </a-button>
           </div>
         </div>
       </div>
