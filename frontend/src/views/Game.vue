@@ -136,14 +136,20 @@ export default {
     async sendAnswer(ans){
       this.dis = true
       let res = await sendAnswer(localStorage.getItem('session'), ans)
-      const key = 'updatable';
-        this.$notification.open({
-          key,
-          message: 'Статистика за день',
-          description: `День: ${this.day}`,
-        });
+      console.log(res.health)
+      console.log(this.user.health)
+      console.log(res.health - this.user.health)
 
+      let Shealth = res.health - this.user.health
+      let Seat = res.food = this.user.eat
+      let Scomm = res.communication - this.user.comm
+      let Shome = res.leisure - this.user.home
 
+      this.$message.info(`Отчет за ${this.day} день`);
+      setTimeout(()=>{this.$message.info(`Жизни: ${Shealth}`)},1000)
+      setTimeout(()=>{this.$message.info(`Еда: ${Seat}`)},1500)
+      setTimeout(()=>{this.$message.info(`Общение: ${Scomm}`)},2000)
+      setTimeout(()=>{this.$message.info(`Досуг: ${Shome}`)},2500)
 
 
 
