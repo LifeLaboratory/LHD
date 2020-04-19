@@ -72,3 +72,20 @@ export function getProfile () {
             return false
         })
 }
+
+export function getProfileInfo (id_user) {
+    return axios.get(`${process.env.VUE_APP_BACKEND}/api/user/` + id_user,
+        {
+            headers: {
+                session: localStorage.getItem('session')
+            }
+        })
+        .then(function (response) {
+            console.log(response)
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error)
+            return false
+        })
+}
