@@ -21,26 +21,31 @@
         <div class="person-list">
           <h1 block>История выживания</h1>
           <div v-for="item in persons" style="border: 1px solid black;">
-            <img :src="item.pic" height="40" width="40" style="margin-top: 5px;"/>
-            <h3>{{item.name}}</h3>
-            <p>{{item.description}}</p>
-
-            <table width="100%" border="1">
-              <tr>
-                <th>Здоровье</th>
-                <th>Питание</th>
-                <th>Досуг</th>
-                <th>Общение</th>
-                <th>Деньги</th>
-              </tr>
-              <tr>
-                <td>{{item.health}}</td>
-                <td>{{item.food}}</td>
-                <td>{{item.leisure}}</td>
-                <td>{{item.communication}}</td>
-                <td>{{item.value}}</td>
-              </tr>
-            </table>
+            <a-row>
+              <a-col :span="4">
+                <img :src="item.pic" height="40" width="40" style="margin-top: 5px;"/>
+                <h3>{{item.name}}</h3>
+              </a-col>
+              <a-col :span="20">
+                <table width="100%" border="1">
+                  <tr>
+                    <th>Здоровье</th>
+                    <th>Питание</th>
+                    <th>Досуг</th>
+                    <th>Общение</th>
+                    <th>Деньги</th>
+                  </tr>
+                  <tr>
+                    <td>{{item.health}}</td>
+                    <td>{{item.food}}</td>
+                    <td>{{item.leisure}}</td>
+                    <td>{{item.communication}}</td>
+                    <td>{{item.value}}</td>
+                  </tr>
+                </table>
+                <a-button @click="toGame" block style="margin: 5px 0 5px 0;">Выбрать</a-button>
+              </a-col>
+            </a-row>
           </div>
         </div>
       </div>
