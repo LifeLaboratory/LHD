@@ -15,6 +15,7 @@
               <th>Досуг</th>
               <th>Общение</th>
               <th>Деньги</th>
+              <th>Очков</th>
             </tr>
             <tr v-for="item in this.rating">
               <td @click.prevent="showPersonInfo(item)"><b style="cursor: pointer; text-decoration: underline;">{{item.name}}</b></td>
@@ -23,6 +24,7 @@
               <td>{{item.leisure}}</td>
               <td>{{item.communication}}</td>
               <td>{{item.value}}</td>
+              <td>{{item.point}}</td>
             </tr>
           </table>
         </div>
@@ -40,6 +42,28 @@
             <div>Максимально прожито дней: {{selectPerson.max_point}}</div>
           </a-col>
         </a-row>
+
+        <div class="person-list">
+          <h1 block>История выживания</h1>
+          <div v-for="item in this.selectPerson.game_history" style="border: 1px solid black;">
+            <table width="100%" border="1">
+              <tr>
+                <th>Здоровье</th>
+                <th>Питание</th>
+                <th>Досуг</th>
+                <th>Общение</th>
+                <th>Очки</th>
+              </tr>
+              <tr>
+                <td>{{item.health}}</td>
+                <td>{{item.food}}</td>
+                <td>{{item.leisure}}</td>
+                <td>{{item.communication}}</td>
+                <td>{{item.point}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
       <div class="selectProfileModalFooter">
         <button class="btn btn-primary" @click.prevent="showModalOne = !showModalOne">Закрыть</button>
