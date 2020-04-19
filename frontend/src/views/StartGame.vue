@@ -7,7 +7,7 @@
             <a-avatar :size="128" :src="this.profileUser.pic" />
           </a-col>
           <a-col :span="16" class="mini-rating">
-            <div>Имя: {{profileUser.login}}</div>
+            <div>Имя: {{profileUser.names}}</div>
             <div>Игры сыграно: {{profileUser.count_game}}</div>
             <div>Максимально прожито дней: {{profileUser.max_point}}</div>
           </a-col>
@@ -15,10 +15,10 @@
         <div class="button-group">
           <a-button block>Начать игру</a-button>
           <a-button v-on:click="toRating()" block>Рейтинг</a-button>
-          <a-button block>История выживания</a-button>
         </div>
 
         <div class="person-list">
+          <h1 block>История выживания</h1>
           <div v-for="item in persons" style="border: 1px solid black;">
             <img :src="item.pic" height="40" width="40" style="margin-top: 5px;"/>
             <h3>{{item.name}}</h3>
@@ -124,6 +124,6 @@ export default {
   width: 100%;
 }
 .person-list {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 </style>
