@@ -1,11 +1,15 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo_lhd.png" width="50%" style="margin-top: 50px;">
-    <h1 style="margin-top: 50px; margin-bottom: 50px;">Выживешь в суровых условиях хакатона в карантин?!</h1>
-    <a-button type="primary" class="start-button" v-on:click="toAuth">
-      Начать выживание
-    </a-button>
-  </div>
+  <a-row type="flex" justify="center">
+    <a-col :span="12">
+      <div class="box">
+        <img alt="Vue logo" src="../assets/logo_lhd.png" width="50%" style="margin-top: 50px;">
+        <h1 style="margin-top: 50px; margin-bottom: 50px;">Выживешь в суровых условиях хакатона в карантин?!</h1>
+        <a-button type="primary" class="start-button" v-on:click="toAuth">
+          Начать выживание
+        </a-button>
+      </div>
+    </a-col>
+  </a-row>
 </template>
 
 <script>
