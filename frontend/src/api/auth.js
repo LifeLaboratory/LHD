@@ -36,7 +36,6 @@ export function authUser (data) {
 export function getPerson () {
     return axios.get(`${process.env.VUE_APP_BACKEND}/api/person`)
         .then(function (response) {
-            console.log(response)
             return response.data
         })
         .catch(function (error) {
@@ -58,8 +57,14 @@ export function getRating () {
 }
 
 export function getProfile () {
-    return axios.get(`${process.env.VUE_APP_BACKEND}/api/user/profile`)
+    return axios.get(`${process.env.VUE_APP_BACKEND}/api/user/profile`,
+        {
+            headers: {
+                session: localStorage.getItem('session')
+            }
+        })
         .then(function (response) {
+            console.log(response)
             return response.data
         })
         .catch(function (error) {
