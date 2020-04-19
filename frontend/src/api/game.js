@@ -51,3 +51,19 @@ export function sendAnswer (session, ans) {
       return false
     })
 }
+
+export function resumeGame (session) {
+  return axios.get(`${process.env.VUE_APP_BACKEND}/api/game`,
+    {
+      headers: {
+        'Session': session,
+      }
+    })
+    .then(function (response) {
+      return response.data
+    })
+    .catch(function (error) {
+      console.log(error)
+      return false
+    })
+}

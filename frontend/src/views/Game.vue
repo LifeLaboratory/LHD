@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { newGame, reloadGame, sendAnswer } from '@/api/game'
+import { newGame, reloadGame, sendAnswer, resumeGame} from '@/api/game'
 export default {
   data() {
     return {
@@ -96,7 +96,14 @@ export default {
   },
   methods: {
    async startNewGame() {
-      let res = await newGame(localStorage.getItem('session'), 1)
+      let id = this.$route.query.id
+      if (!id) {
+       this.$router.push({ path: 'start' }) 
+       return
+
+      }
+
+      let res = await newGame(localStorage.getItem('session'), id)
       this.day = res.round
       this.descr = res.description
       this.left = res.left_answer
@@ -111,13 +118,35 @@ export default {
 
     },
 
-    reloadGame() {
+    async resumeGame() {
+      let res = await resumeGame(localStorage.getItem('session'))
+      this.day = res.round
+      this.descr = res.description
+      this.left = res.left_answer
+      this.right = res.right_answer
 
+      this.pic = res.pic
+      this.user.name = res.name
+      this.user.health = res.health
+      this.user.eat = res.food
+      this.user.comm = res.communication
+      this.user.home = res.leisure
     },
 
     async sendAnswer(ans){
       this.dis = true
       let res = await sendAnswer(localStorage.getItem('session'), ans)
+      const key = 'updatable';
+        this.$notification.open({
+          key,
+          message: 'Статистика за день',
+          description: `День: ${this.day}`,
+        });
+
+
+
+
+
       this.day = res.round
       this.descr = res.description
       this.left = res.left_answer
@@ -134,6 +163,11 @@ export default {
     
   },
   mounted() {
+    let type = this.$route.query.type
+    if (type === 'resume') {
+      this.resumeGame()
+      return
+    }
     this.startNewGame();
   },
 

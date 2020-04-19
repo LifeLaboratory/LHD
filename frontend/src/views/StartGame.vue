@@ -13,8 +13,8 @@
           </a-col>
         </a-row>
         <div class="button-group">
-          <a-button v-if="newGame" @click="toChoicePers" block>Начать игру</a-button>
-          <a-button v-if="!newGame" @click="toGame" block>Продолить игру</a-button>
+          <a-button  @click="toChoicePers" block>Начать игру</a-button>
+          <a-button v-if="!newGame" @click="toGame" block>Продолжить игру</a-button>
           <a-button @click="toRating" block>Рейтинг</a-button>
         </div>
 
@@ -66,6 +66,9 @@ export default {
     }
   },
   methods: {
+    toGame () {
+      this.$router.push({ path: '/game', query: { type: 'resume' } })
+    },
     toChoicePers: function() {
       this.$router.push('/choice')
     },
@@ -100,7 +103,8 @@ export default {
   },
 
   created: async function () {
-    let res = await getGame(localStorage.getItem('token'))
+    let res = await getGame(localStorage.getItem('session'))
+
     if (res == false) {
       this.newGame = true
     } else {
