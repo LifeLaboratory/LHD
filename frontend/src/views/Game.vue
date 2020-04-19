@@ -2,28 +2,28 @@
   <div class="game-container"> 
       <div class="top-menu">
         <div class="actual-day">
-          День - 5
+          День - {{day}}
         </div>
       </div>
 
-    <div class="outer" style="height:80vh; width: 50%; margin-left: 25%">
+    <div class="outer" style="height:80vh; width: 50%; margin-left: 25%" v-if="descr != ''">
       <div class="inner" style="border:1px solid red">
-        <div class="left">
-          asd
-        </div>
 
 
         <div class="card-box">
-          <b>Вопрос:</b>
-          <div>
-
+          <div style="margin-top: 50px; font-size: 20px; word-wrap: break-word; padding-left: 10px; padding-right: 10px;">
+              <b>{{descr}}</b>
           </div>
-
         </div>
-
-
-        <div class="right">
-          123
+        <div style="
+            width: 70%;
+            margin-left: 15%;
+            background: rgba(255,255,255,0.8);
+            padding-bottom: 15px;
+            height: 90px;
+            ">
+            <a-button :disabled="dis" @click="sendAnswer('left')">{{left}} </a-button>
+            <a-button :disabled="dis"  @click="sendAnswer('right')">{{right}}</a-button>
         </div>
       </div>
     </div>
@@ -34,33 +34,33 @@
             <a-avatar :size="128" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
           </a-col>
           <a-col :span="16" class="stats-game">
-            <div>Профессия: Работяга</div>
+            <div>Профессия: {{user.name}}</div>
             <div>
               <div style="display: inline-block">
                 <a-icon type="heart" theme="twoTone" twoToneColor="#eb2f96" />
               </div>
-              <a-progress :percent="30" :strokeColor="{  '0%': '#eb2f96', '100%': '#eb2f96'}" />
+              <a-progress :percent="user.health" :strokeColor="{  '0%': '#eb2f96', '100%': '#eb2f96'}" />
             </div>
 
             <div>
               <div style="display: inline-block">
                 <a-icon type="coffee" style="color:rgb(235, 134, 47);" />
               </div>
-              <a-progress :percent="30" :strokeColor="{  '0%': 'rgb(235, 134, 47)', '100%': 'rgb(235, 134, 47)'}" />
+              <a-progress :percent="user.eat" :strokeColor="{  '0%': 'rgb(235, 134, 47)', '100%': 'rgb(235, 134, 47)'}" />
             </div>
 
             <div>
               <div style="display: inline-block">
                 <a-icon type="smile" theme="twoTone" twoToneColor="rgb(62, 181, 98)" />
               </div>
-              <a-progress :percent="30" :strokeColor="{  '0%': 'rgb(62, 181, 98)', '100%': 'rgb(62, 181, 98)'}" />
+              <a-progress :percent="user.comm" :strokeColor="{  '0%': 'rgb(62, 181, 98)', '100%': 'rgb(62, 181, 98)'}" />
             </div>
 
             <div>
               <div style="display: inline-block">
                 <a-icon type="home" theme="twoTone" twoToneColor="rgb(59, 47, 235)" />
               </div>
-              <a-progress :percent="30" :strokeColor="{  '0%': 'rgb(59, 47, 235)', '100%': 'rgb(59, 47, 235)'}" />
+              <a-progress :percent="user.home" :strokeColor="{  '0%': 'rgb(59, 47, 235)', '100%': 'rgb(59, 47, 235)'}" />
             </div>
           </a-col>
         </a-row>
@@ -69,18 +69,66 @@
 </template>
 
 <script>
-import { newGame, reloadGame } from '@/api/game'
+import { newGame, reloadGame, sendAnswer } from '@/api/game'
 export default {
-  data: {
-   
+  data() {
+    return {
+      dis: false,
+      user: {
+        name: '',
+        health: 0,
+        eat: 0,
+        comm: 0,
+        home: 0
+      },
+
+      day: 0,
+      left: '', 
+      right: '',
+      descr: '',
+
+      leftAction: {
+
+      }
+
+    }
   },
   methods: {
    async startNewGame() {
       let res = await newGame(localStorage.getItem('session'), 1)
+      this.day = res.round
+      this.descr = res.description
+      this.left = res.left_answer
+      this.right = res.right_answer
+
+
+      this.user.name = res.name
+      this.user.health = res.health
+      this.user.eat = res.food
+      this.user.comm = res.communication
+      this.user.home = res.leisure
+
     },
 
     reloadGame() {
 
+    },
+
+    async sendAnswer(ans){
+      this.dis = true
+      let res = await sendAnswer(localStorage.getItem('session'), ans)
+      this.day = res.round
+      this.descr = res.description
+      this.left = res.left_answer
+      this.right = res.right_answer
+
+
+      this.user.name = res.name
+      this.user.health = res.health
+      this.user.eat = res.food
+      this.user.comm = res.communication
+      this.user.home = res.leisure
+      this.dis = false
     }
     
   },
@@ -91,7 +139,23 @@ export default {
 };
 </script>
 <style>
+.right {
+  margin-left: 15px;
+}
 
+.left {
+  margin-right: 15px;
+}
+
+.left > .ant-btn-icon-only {
+  width: 64px;
+  height: 64px;
+}
+
+.right > .ant-btn-icon-only {
+  width: 64px;
+  height: 64px;
+}
 
 .outer:before {
   content: '';
@@ -119,7 +183,7 @@ export default {
   margin-left: 35%;
 }
 .card-box {
-  width: 80%;
+  width: 70%;
   height: 300px;
   background: rgba(255,255,255,0.8);
 }
