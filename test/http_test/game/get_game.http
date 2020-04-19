@@ -7,6 +7,6 @@
 
 GET http://127.0.0.1/api/game
 Accept: application/json
-Session: 202d9f32-b20a-bc9a-54aa-558e43fe8d6e
+Session: 8768374e-b1ef-5e10-fb0b-dd24275b13c3
 
 ###

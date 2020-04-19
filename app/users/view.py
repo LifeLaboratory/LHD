@@ -13,6 +13,9 @@ def all_user():
 
 @app.route(PREFIX + '/profile', methods=['GET', 'OPTIONS'])
 def profile_user():
+    if request.method == 'OPTIONS':
+        print(request.method)
+        return jsonify({}), header_option()
     id_user = session_to_id_user(request.headers)
     answer = Processor().profile(id_user)
     if answer:
@@ -24,6 +27,9 @@ def profile_user():
 
 @app.route(PREFIX + '/<int:id_user>', methods=['GET', 'OPTIONS'])
 def profile(id_user):
+    if request.method == 'OPTIONS':
+        print(request.method)
+        return jsonify({}), header_option()
     answer = Processor().profile(id_user)
     if answer:
         answer = answer[0]

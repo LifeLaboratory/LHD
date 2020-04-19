@@ -14,13 +14,13 @@ class Processor:
         question = {}
         if data.get('id_user'):
             self.close_old_game(data)
-            question = self.get_next_question(data)
-            if question:
-                data['id_question'] = question.get('id_question')
-                person = self.set_person_character(data)
-                game = self.provider.start_game(person)
-                if not game:
-                    question = {}
+            # question = self.get_next_question(data)
+            # if question:
+            #     data['id_question'] = question.get('id_question')
+            person = self.set_person_character(data)
+            game = self.provider.start_game(person)
+            if not game:
+                question = {}
         return question
 
     def set_person_character(self, data):
@@ -77,6 +77,7 @@ class Processor:
         answer = {}
         if data.get('id_user') and data.get('answer') in ['left', 'right']:
             answer = self.provider.check_question(data)
+            print('answer = ', answer)
             if not answer:
                 return {}
             else:
@@ -84,9 +85,22 @@ class Processor:
             self.debuf(answer)
             self.update_game_status(answer)
             answer['covid'] = True if answer.get('round') - answer.get('covid') < 10 else False
+            answer['end'] = False
             if answer.get('health') <= 0:
                 self.close_old_game(data)
+                self.end_game(answer)
         return answer
+
+    def end_game(self, answer):
+        """
+        Метод устанавливает пользователю информацию для завершения игры
+        :param answer:
+        :return:
+        """
+        answer['end'] = True
+        rnd = answer.get('round')
+        answer['event'] = f'ОУПС! Игра закончилась! Сожалею, но ты прожил в карантине {rnd} д. \r\n' \
+                          f'В следующий раз(конечно он будет) ты продержишься дольше:)'
 
     def debuf(self, data):
         """

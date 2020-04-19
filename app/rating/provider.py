@@ -18,8 +18,12 @@ class Provider(bp.Provider):
     gu.*
     , g.*
     , u.login as name
+    , p.title 
+    , p.description
+    , p.pic
   from get_users gu
   join users u using(id_user)
+  join person p using(id_person)
   join lateral (
       select
         time_close as time
