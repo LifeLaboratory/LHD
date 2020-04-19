@@ -20,24 +20,23 @@ def game_main():
     return answer, header_option()
 
 
-@app.route(PREFIX + '/question', methods=['POST'])
+@app.route(PREFIX + '/question', methods=['POST', 'OPTIONS'])
 def game_question():
     if request.method == 'OPTIONS':
         return {}, header_option()
-    func = {
-      'id_question': 1,
-      'description': 'Самый лучший вопрос?',
-      'round': 10,  # Номер раунда игры
-      'health': 10.0,   # Здоровье
-      'food': 10.0,     # Питание
-      'leisure': 10.0,  # Досуг
-      'communication': 10.0,   # Общение
-      'point': 2,  # количество очков
-      'value': 3,  # количество денег
-    }
     data = request.json
     check_session(data, request.headers)
     answer = jsonify(Processor().check_question(data))
+    return answer, header_option()
+
+
+@app.route(PREFIX + '/action', methods=['POST', 'OPTIONS'])
+def game_action():
+    if request.method == 'OPTIONS':
+        return {}, header_option()
+    data = request.json
+    check_session(data, request.headers)
+    answer = jsonify(Processor().game_action(data))
     return answer, header_option()
 
 

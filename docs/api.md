@@ -12,7 +12,7 @@ response:
   ]
 }
 
-GET /api/user/profile  # получение своего профиля пользователя
+-> GET /api/user/profile  # получение своего профиля пользователя
 response:
 {
   'id_user': int,
@@ -35,7 +35,7 @@ response:
   ]
 }
 
-GET /api/user/<int:id_user> # получение профиля пользователя
+-> GET /api/user/<int:id_user> # получение профиля пользователя
 response:
 {
   'id_user': int,
@@ -134,6 +134,9 @@ response:
   'communication': float,   # Общение
   'point': int, # количество очков
   'value': int, # количество денег
+  'call': bool, # можем ли позвонить? 
+  'worked': bool, # можем ли работать? 
+  'covid': bool, # заражены? 
 }
 
 -> POST /api/game # Запуск новой игры
@@ -158,6 +161,9 @@ response
   'communication': float,   # Общение
   'point': int, # количество очков
   'value': int, # количество денег
+  'call': bool, # можем ли позвонить? 
+  'worked': bool, # можем ли работать? 
+  'covid': bool, # заражены? 
 }
 
 GET /api/game/events # Получить события, которые произошли в игре
@@ -170,4 +176,28 @@ response
     }
   ]
 }
+
+
+POST /api/game/action # Выполнить действие
+{
+  'action': str # worked/call_friend/call_delivery
+}
+response:
+{
+  'id_question': int,
+  'description': str,
+  'left_answer': str,  # Первый ответ
+  'right_answer': str,  # Второй ответ
+  'round': int, # Номер раунда игры
+  'health': float,   # Здоровье
+  'food': float,     # Питание
+  'leisure': float,  # Досуг
+  'communication': float,   # Общение
+  'point': int, # количество очков
+  'value': int, # количество денег
+  'call': bool, # можем ли позвонить? 
+  'worked': bool, # можем ли работать? 
+  'covid': bool, # заражены? 
+}
+
 ```

@@ -83,6 +83,7 @@ class Processor:
                 answer = answer[0]
             self.debuf(answer)
             self.update_game_status(answer)
+            answer['covid'] = True if answer.get('round') - answer.get('covid') < 10 else False
             if answer.get('health') <= 0:
                 self.close_old_game(data)
         return answer
@@ -98,6 +99,46 @@ class Processor:
         communication = -1 if data.get('communication') == 0 else 0
         data['health'] += food + leisure + communication
 
+    def game_action(self, data):
+        """
+        Метод обрабатывает события в игре
+        :param data:
+        :return:
+        """
+        action = {
+            'worked': self.worked,
+            'call_friend': self.call_friend,
+            'call_delivery': self.call_delivery,
+        }
+        if data.get('id_user') and data.get('action') in ['worked', 'call_friend', 'call_delivery']:
+            game = self.provider.game_action(data)[0]
+            action.get(data.get('action'))(game)
+            self.provider.update_action(game)
+            return self.get_game(data.get('id_user'))
+
+    def worked(self, game):
+        work = game.get('worked')
+        round = game.get('round')
+        if work < 2 or round - work > 2:
+            game['point'] += 1
+            game['worked'] = round
+
+    def call_friend(self, game):
+        calling = game.get('call')
+        round = game.get('round')
+        if calling < 2 or round - calling > 2:
+            game['point'] -= 3
+            game['communication'] += 2
+            game['leisure'] += 1
+            game['call'] = round
+
+    def call_delivery(self, game):
+        calling = game.get('call')
+        round = game.get('round')
+        if calling < 2 or round - calling > 2:
+            game['point'] -= 3
+            game['food'] += 2
+            game['call'] = round
 
     def get_next_question(self, data):
         """
