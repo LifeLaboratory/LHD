@@ -7,7 +7,7 @@
       </div>
 
     <div class="outer" style="height:80vh; width: 50%; margin-left: 25%" v-if="descr != ''">
-      <div class="inner" style="border:1px solid red">
+      <div class="inner">
 
 
         <div class="card-box">
@@ -31,7 +31,7 @@
       <div class="bottom-menu">
         <a-row class="profile-game">
           <a-col :span="4">
-            <a-avatar :size="128" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            <a-avatar :size="128" :src="pic" />
           </a-col>
           <a-col :span="16" class="stats-game">
             <div>Профессия: {{user.name}}</div>
@@ -82,6 +82,7 @@ export default {
         home: 0
       },
 
+      pic: '',
       day: 0,
       left: '', 
       right: '',
@@ -101,7 +102,7 @@ export default {
       this.left = res.left_answer
       this.right = res.right_answer
 
-
+      this.pic = res.pic
       this.user.name = res.name
       this.user.health = res.health
       this.user.eat = res.food
