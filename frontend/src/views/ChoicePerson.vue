@@ -17,7 +17,7 @@
             </a-card-meta>
             <div style="text-align: left; margin-top: 5px;">
                 <div>Жизни: {{el.health}}</div>
-                <div>Еда: {{el.eat}}</div>
+                <div>Еда: {{el.food}}</div>
                 <div>Общение: {{el.communication}}</div>
                 <div>Досуг: {{el.leisure}}</div>
                 <div>Деньги: {{el.value}}</div>

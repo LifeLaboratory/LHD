@@ -100,8 +100,9 @@ export default {
       if (!id) {
        this.$router.push({ path: 'start' }) 
        return
-
       }
+      this.$router.replace({id: '-1'})
+   
 
       let res = await newGame(localStorage.getItem('session'), id)
       this.day = res.round
@@ -136,12 +137,18 @@ export default {
     async sendAnswer(ans){
       this.dis = true
       let res = await sendAnswer(localStorage.getItem('session'), ans)
+      if (res.end === true) {
+        this.$warning({
+          title: `Вы проиграли. Прожито дней ${this.day}`
+        })
+        this.$router.push({ path: 'start' })
+      }
       console.log(res.health)
       console.log(this.user.health)
       console.log(res.health - this.user.health)
 
       let Shealth = res.health - this.user.health
-      let Seat = res.food = this.user.eat
+      let Seat = res.food - this.user.eat
       let Scomm = res.communication - this.user.comm
       let Shome = res.leisure - this.user.home
 

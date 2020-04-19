@@ -61,6 +61,10 @@ export default {
         if (!err) {
           console.log('Received values of form: ', values);
           let res = await authUser(values)
+          if (res.error) {
+            this.$message.error(res.error);
+            return
+          }
           if (res !== false) {
             localStorage.setItem('session', res.session)
             this.$router.push('/start')
