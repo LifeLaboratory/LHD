@@ -9,10 +9,13 @@ PREFIX = '/api/game'
 @app.route(PREFIX, methods=['GET', 'POST', "OPTIONS"])
 def game_main():
     answer = {}
-    if request.method == 'POST':
+    if request.method == 'OPTIONS':
+        return {}, header_option()
+    elif request.method == 'POST':
         data = request.json
         check_session(data, request.headers)
         answer = Processor().start_game(data)
+        answer = Processor().get_game(data.get('id_user'))
     elif request.method == 'GET':
         id_user = session_to_id_user(request.headers)
         answer = Processor().get_game(id_user)

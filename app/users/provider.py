@@ -68,19 +68,24 @@ game_history as (
             'food', food,
             'leisure', leisure,
             'communication', communication,
-            'point', point
+            'point', point,
+            'pic', pic,
+            'title', name
             )
         )
   from (
     select id_game
          , time_close as time
          , round
-         , health
-         , food
-         , leisure
-         , communication
+         , g.health
+         , g.food
+         , g.leisure
+         , g.communication
          , point
-    from game
+         , p.pic
+         , p.name
+    from game g
+    left join person p using(id_person)
     where id_user = {id_user}
     order by 2 desc nulls first
   ) g

@@ -27,7 +27,7 @@ class Provider(bp.Provider):
   )
   values (
     {data.get('id_user')}
-    , {data.get('id_question')}
+    , 0
     , coalesce({data.get('health')}, 10)
     , coalesce({data.get('food')}, 10)
     , coalesce({data.get('leisure')}, 10)
@@ -46,12 +46,12 @@ class Provider(bp.Provider):
         """
         self.query = f'''
   with question_count as (
-    select count(1)
+    select count(1) as count
     from question
   )
   select *
   from question
-  where id_question = random()*((select count from question_count limit 1)-1)+1
+  order by random() 
   limit 1
 '''
         return self.execute()[0]
@@ -153,13 +153,14 @@ class Provider(bp.Provider):
         """
         self.query = f'''
   with question_count as (
-    select count(1)
+    select count(1) as count
     from question
   ),
   new_question as (
     select *
     from question
-    where id_question = random()*((select count from question_count limit 1)-1)+1
+    where id_question > 0 
+    order by random()
     limit 1
   ),
   get_game as (
@@ -198,6 +199,7 @@ class Provider(bp.Provider):
           else false
         end as worked
       , case when round - covid = 10 and covid > 0 then 0 else covid end covid
+      , q.{data.get('answer')}->>'event' as event
     from game g, new_question nq
      left join question q using(id_question)
     where id_user = {data.get('id_user')}

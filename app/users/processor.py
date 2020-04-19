@@ -10,11 +10,19 @@ class Processor:
         user = self.provider.create(data)
         if user:
             return create_session(user[0].get('id_user'))
+        else:
+            return {
+                'error': 'Такой логин занят!'
+            }
 
     def login(self, data):
         user = self.provider.login(data)
         if user:
             return create_session(user.get('id_user'))
+        else:
+            return {
+                'error': 'Неверный логин или пароль!'
+            }
 
     def profile(self, id_user):
         return self.provider.profile(id_user)

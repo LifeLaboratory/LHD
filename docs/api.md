@@ -164,6 +164,7 @@ response
   'call': bool, # можем ли позвонить? 
   'worked': bool, # можем ли работать? 
   'covid': bool, # заражены? 
+  'event': str, # Событие, которое необходимо отобразить пользователю
 }
 
 GET /api/game/events # Получить события, которые произошли в игре
@@ -178,7 +179,7 @@ response
 }
 
 
-POST /api/game/action # Выполнить действие
+-> POST /api/game/action # Выполнить действие
 {
   'action': str # worked/call_friend/call_delivery
 }
