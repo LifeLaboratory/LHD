@@ -6,7 +6,7 @@ from app.base.helper import header_option
 PREFIX = '/api/person'
 
 
-@app.route(PREFIX, methods=['GET'])
+@app.route(PREFIX, methods=['GET', 'OPTIONS'])
 def all_person():
     func = {
         'id_person': 1,

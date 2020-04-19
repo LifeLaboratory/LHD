@@ -11,16 +11,18 @@ def all_user():
     return jsonify(Processor().users()), header_option()
 
 
-@app.route(PREFIX + '/profile', methods=['GET'])
+@app.route(PREFIX + '/profile', methods=['GET', 'OPTIONS'])
 def profile_user():
     id_user = session_to_id_user(request.headers)
-    answer = jsonify(Processor().profile(id_user))
-    if not answer:
+    answer = Processor().profile(id_user)
+    if answer:
+        answer = answer[0]
+    else:
         answer = {}
-    return answer, header_option()
+    return jsonify(answer), header_option()
 
 
-@app.route(PREFIX + '/<int:id_user>', methods=['GET'])
+@app.route(PREFIX + '/<int:id_user>', methods=['GET', 'OPTIONS'])
 def profile(id_user):
     answer = Processor().profile(id_user)
     if answer:
