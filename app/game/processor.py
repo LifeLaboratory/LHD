@@ -1,5 +1,7 @@
 from app.game.provider import Provider
 from app.base.helper import get_person
+from random import randint
+
 
 class Processor:
     def __init__(self):
@@ -83,7 +85,10 @@ class Processor:
             else:
                 answer = answer[0]
             self.debuf(answer)
+            if answer.get('covid') == 0 and answer.get('is_covid'):
+                answer['covid'] = answer.get('round')  if randint(1, 100) < 25 else 0
             self.update_game_status(answer)
+            answer = self.get_game(data.get('id_user'))
             answer['covid'] = True if answer.get('round') - answer.get('covid') < 10 else False
             answer['end'] = False
             if answer.get('health') <= 0:

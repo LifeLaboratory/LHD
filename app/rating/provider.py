@@ -18,12 +18,11 @@ class Provider(bp.Provider):
     gu.*
     , g.*
     , u.login as name
-    , p.title 
+    , p.name as title 
     , p.description
     , p.pic
   from get_users gu
   join users u using(id_user)
-  join person p using(id_person)
   join lateral (
       select
         time_close as time
@@ -33,11 +32,13 @@ class Provider(bp.Provider):
         , communication
         , point
         , value
+        , id_person
       from game g
       where g.id_user = gu.id_user
       order by point desc
       limit 1
   ) g on True
+  join person p using(id_person)
   order by point desc
 '''
         return self.execute()

@@ -18,7 +18,7 @@ def session_to_id_user(header):
 
 
 def check_session(data, header):
-    session = header.get('session')
+    session = header.get('session') or header.get('Session')
     if session:
         id_user = Session().check_session(session)
         if id_user:

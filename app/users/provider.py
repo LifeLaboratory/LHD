@@ -44,7 +44,7 @@ with info_user_game as (
     select
       id_user
       , count(1) as count_game
-      , max(point) as max_point
+      , max(round) as max_point
     from game
     group by id_user
 ),

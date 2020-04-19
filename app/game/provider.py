@@ -67,10 +67,10 @@ class Provider(bp.Provider):
       id_question
       , id_game
       , round
-      , health
-      , food
-      , leisure
-      , communication
+      , ceil(health / 0.2) health
+      , ceil(food / 0.2) food
+      , ceil(leisure / 0.2) leisure
+      , ceil(communication / 0.2) communication
       , value
       , id_person
       , case 
@@ -168,24 +168,24 @@ class Provider(bp.Provider):
       nq.id_question
       , id_game
       , round + 1 as round
-      , greatest(
+      , least(20.0, greatest(
             0
             , g.health + (q.{data.get('answer')}->>'health')::int +
                 -- Если человек заражен, он теряет здоровье
                 case when round - covid < 10 and covid > 0 then -1 else 0 end
-        ) as health
-      , greatest(
+        )) as health
+      , least(20.0, greatest(
             0
             , g.food + (q.{data.get('answer')}->>'food')::int
-        ) as food
-      , greatest(
+        )) as food
+      , least(20.0, greatest(
             0
             , g.leisure + (q.{data.get('answer')}->>'leisure')::int
-        ) as leisure
-      , greatest(
+        )) as leisure
+      , least(20.0, greatest(
             0
             , g.communication + (q.{data.get('answer')}->>'communication')::int
-        ) as communication
+        )) as communication
       , g.point + (q.{data.get('answer')}->>'point')::int as point
       , id_person
       , case 
@@ -200,6 +200,7 @@ class Provider(bp.Provider):
         end as worked
       , case when round - covid = 10 and covid > 0 then 0 else covid end covid
       , q.{data.get('answer')}->>'event' as event
+      , q.{data.get('answer')}->>'covid' as is_covid
     from game g, new_question nq
      left join question q using(id_question)
     where id_user = {data.get('id_user')}
