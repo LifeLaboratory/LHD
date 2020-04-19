@@ -6,13 +6,27 @@
         </div>
       </div>
 
-      <div class="center-menu">
+    <div class="outer" style="height:80vh; width: 50%; margin-left: 25%">
+      <div class="inner" style="border:1px solid red">
+        <div class="left">
+          asd
+        </div>
+
+
         <div class="card-box">
-          
+          <b>Вопрос:</b>
+          <div>
+
+          </div>
+
+        </div>
+
+
+        <div class="right">
+          123
         </div>
       </div>
-
-
+    </div>
 
       <div class="bottom-menu">
         <a-row class="profile-game">
@@ -55,20 +69,59 @@
 </template>
 
 <script>
-
+import { newGame, reloadGame } from '@/api/game'
 export default {
   data: {
    
   },
   methods: {
+   async startNewGame() {
+      let res = await newGame(localStorage.getItem('session'), 1)
+    },
+
+    reloadGame() {
+
+    }
     
+  },
+  mounted() {
+    this.startNewGame();
   },
 
 };
 </script>
 <style>
+
+
+.outer:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.inner {
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.outer {
+  text-align: center;
+}
+
+.left, .right, .card-box {
+  display: inline-block;
+}
+.center-menu {
+  margin-top: 80px;
+  width: 30%;
+  margin-left: 35%;
+}
 .card-box {
-  margin-top: 50px;
+  width: 80%;
+  height: 300px;
+  background: rgba(255,255,255,0.8);
 }
 .actual-day {
   font-size: 24px;

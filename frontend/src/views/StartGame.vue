@@ -13,8 +13,9 @@
           </a-col>
         </a-row>
         <div class="button-group">
-          <a-button block>Начать игру</a-button>
-          <a-button v-on:click="toRating()" block>Рейтинг</a-button>
+          <a-button v-if="newGame" @click="toChoicePers" block>Начать игру</a-button>
+          <a-button v-if="!newGame" @click="toGame" block>Продолить игру</a-button>
+          <a-button @click="toRating" block>Рейтинг</a-button>
         </div>
 
         <div class="person-list">
@@ -49,15 +50,20 @@
 
 <script>
   import {getPerson, getProfile} from "../api/auth";
+  import { getGame } from "@/api/game"
 export default {
   data() {
     return {
+      newGame: Boolean,
       isLoaded: false,
       persons: [],
       profileUser: undefined,
     }
   },
   methods: {
+    toChoicePers: function() {
+      this.$router.push('/choice')
+    },
     toRating: function() {
       this.$router.push('/rating');
     },
@@ -88,6 +94,15 @@ export default {
     }
   },
 
+  created: async function () {
+    let res = await getGame(localStorage.getItem('token'))
+    if (res == false) {
+      this.newGame = true
+    } else {
+      this.newGame = false
+    }
+    console.log("Проверка игры", res)
+  },
   mounted() {
     this.getMyProfile();
     this.getAllPerson();
