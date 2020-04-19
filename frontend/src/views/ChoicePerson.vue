@@ -2,7 +2,7 @@
 <a-row type="flex" justify="center">
   <a-col :span="12">
       <div class="box">
-asd
+        
 
       </div>
   </a-col>
